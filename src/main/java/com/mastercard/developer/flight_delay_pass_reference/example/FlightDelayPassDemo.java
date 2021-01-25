@@ -44,9 +44,8 @@ public class FlightDelayPassDemo {
         RequestHelper.loadProperties();
 
         ApiClient apiClient = new ApiClient();
-        //apiClient.addDefaultHeader("x-openapi-clientid", "apikey");
         apiClient.setBasePath(RequestHelper.getBaseURL());
-        //apiClient.getHttpClient().interceptors().add(new OkHttp2OAuth1Interceptor(RequestHelper.getConsumerkey(),RequestHelper.getPrivateKey()));
+        apiClient.getHttpClient().interceptors().add(new OkHttp2OAuth1Interceptor(RequestHelper.getConsumerkey(),RequestHelper.getPrivateKey()));
         apiClient.setDebugging(true);
         FlightDelayControllerApi flightDelayControllerApi = new FlightDelayControllerApi(apiClient);
 
@@ -63,7 +62,7 @@ public class FlightDelayPassDemo {
     private static void executeRegistrationScenario(FlightDelayControllerApi flightDelayControllerApi) {
         UserRequest userRequest = getRegistrationObject();
         try {
-            printMessage("STARTING FLIGHT DELAY PASS REFRENCE APP RESPONSE FROM COMMAND LINE");
+            printMessage("STARTING FLIGHT DELAY PASS REFERENCE APP RESPONSE FROM COMMAND LINE");
             RegistrionResponse result = flightDelayControllerApi.postRegistration("api-key",userRequest );
             System.out.println("Parsed Response---------------");
             System.out.println(result);
