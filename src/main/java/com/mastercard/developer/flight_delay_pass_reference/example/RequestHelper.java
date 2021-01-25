@@ -37,15 +37,15 @@ import java.util.Properties;
 
 public class RequestHelper {
 	
-	private static String CONSUMER_KEY ="mastercard.airport.ref.app.consumer.key";
+	private static String CONSUMER_KEY ="mastercard.flight.delay.pass.ref.app.consumer.key";
 	
-	private static String KEYSTORE_PATH ="mastercard.airport.ref.app.keystore.path";
+	private static String KEYSTORE_PATH ="mastercard.flight.delay.pass.ref.app.keystore.path";
 	
-	private static String KEYSTORE_PASSWORD ="mastercard.airport.ref.app.keystore.password";
+	private static String KEYSTORE_PASSWORD ="mastercard.flight.delay.pass.ref.app.keystore.password";
 	
-	private static String KEYSTORE_ALIAS ="mastercard.airport.ref.app.keystore.alias";
+	private static String KEYSTORE_ALIAS ="mastercard.flight.delay.pass.ref.app.app.keystore.alias";
 	
-	private static String BASE_URL = "mastercard.airport.ref.app.url";
+	private static String BASE_URL = "mastercard.flight.delay.pass.ref.app.url";
 	
 	private static Properties prop = null;
 	
