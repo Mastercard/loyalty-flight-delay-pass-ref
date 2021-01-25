@@ -57,7 +57,7 @@ import com.mastercard.developer.flight_delay_pass_reference.auth.OAuthFlow;
 
 public class ApiClient {
 
-    private String basePath = "";
+    private String basePath = "https://api.mastercard.com";
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;
