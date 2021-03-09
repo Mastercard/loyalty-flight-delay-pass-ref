@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2019 Mastercard
+ *  Copyright (c) 2021 Mastercard
  
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
  * 
- * Loyalty Airport Experience API
- * The Loyalty Airport Lounge APIs offers cardholders, via their issuers, the ability to  access the Mastercard Airport Lounge service through this digital channel.  Cardholders can search for airport lounges, get airport lounge details,  access airport lounges via their personalized Digital Membership Card,  and access their lounge history. These APIs can be used to build a rich,  interactive airport experience within the issuer's existing mobile application.
+ * Loyalty Flight Delay Pass API
+ * The Loyalty Flight Delay Pass APIs offers cardholders, via their issuers, the ability to  access the Lounge in airport if flight gets delayed.
  *
  * OpenAPI spec version: 1.0.0
  * Contact: loyalty-benefits-support@mastercard.flowdock.com
