@@ -24,9 +24,6 @@ limitations under the License.
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-
-
 package com.mastercard.developer.flight_delay_pass_reference.auth;
 
 import com.mastercard.developer.flight_delay_pass_reference.Pair;
@@ -36,7 +33,6 @@ import com.squareup.okhttp.Credentials;
 import java.util.Map;
 import java.util.List;
 
-import java.io.UnsupportedEncodingException;
 
 public class HttpBasicAuth implements Authentication {
     private String username;

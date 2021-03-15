@@ -24,8 +24,6 @@ limitations under the License.
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-
 package com.mastercard.developer.flight_delay_pass_reference.example;
 
 import com.mastercard.developer.flight_delay_pass_reference.ApiClient;
@@ -33,11 +31,15 @@ import com.mastercard.developer.flight_delay_pass_reference.ApiException;
 import com.mastercard.developer.flight_delay_pass_reference.api.FlightDelayControllerApi;
 import com.mastercard.developer.flight_delay_pass_reference.model.*;
 import com.mastercard.developer.interceptors.OkHttp2OAuth1Interceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlightDelayPassDemo {
+
+    private static Logger logger = LoggerFactory.getLogger(FlightDelayPassDemo.class);
 
     public static void main(String[] args) throws Exception {
 
@@ -64,32 +66,31 @@ public class FlightDelayPassDemo {
         try {
             printMessage("STARTING FLIGHT DELAY PASS REFERENCE APP RESPONSE FROM COMMAND LINE");
             RegistrionResponse result = flightDelayControllerApi.postRegistration("api-key",userRequest );
-            System.out.println("Parsed Response---------------");
-            System.out.println(result);
+            logger.info("Parsed Response---------------");
+            logger.info(" {} ",result);
         } catch (Exception e) {
-            System.err.println("Exception when calling Registration");
-            e.printStackTrace();
+            logger.error("Exception when calling Registration", e);
         }
     }
 
     private static void executeErrorScenario(FlightDelayControllerApi flightDelayControllerApi) {
-
         UserRequest userRequest = new UserRequest();
         userRequest.setDepartureDate("ZZZZZZZZZZ");
         try {
             printMessage("STARTING FLIGHT DELAY PASS REFRENCE APP ERROR SCENARIO FROM COMMAND LINE");
             flightDelayControllerApi.postRegistration("api-key",userRequest );
         } catch (ApiException e) {
-            System.err.println("Exception when calling Flightdelay Service Mock");
+            logger.error("Exception when calling Flightdelay Service Mock", e);
         }
     }
 
     private static void printMessage(String scenario) {
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println(scenario + "---------------");
-        System.out.println("--------------------------------------------------------------------");
-        System.out.println("--------------------------------------------------------------------");
+        String printDesign = "--------------------------------------------------------------------";
+        logger.info(printDesign);
+        logger.info(printDesign);
+        logger.info("{} ---------------", scenario);
+        logger.info(printDesign);
+        logger.info(printDesign);
     }
 
 
@@ -140,7 +141,6 @@ public class FlightDelayPassDemo {
         userRequest.setUser(userDetails);
 
         return userRequest;
-
     }
 
     private static boolean runThisScenario(String[] args, String scenario) {

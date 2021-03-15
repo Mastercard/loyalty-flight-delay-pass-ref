@@ -86,14 +86,14 @@ public class FlightDelayControllerApi {
         // create path and map variables
         String localVarPath = "/loyalty/flight-delay-pass/registrations";
 
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
         if (xOpenapiClientid != null) {
             localVarHeaderParams.put("x-openapi-clientid", apiClient.parameterToString(xOpenapiClientid));
         }
 
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         final String[] localVarAccepts = {
             "*/*"
         };
@@ -136,11 +136,9 @@ public class FlightDelayControllerApi {
         if (userRequest == null) {
             throw new ApiException("Missing the required parameter 'userRequest' when calling postRegistration(Async)");
         }
-        
 
-        com.squareup.okhttp.Call call = postRegistrationCall(xOpenapiClientid, userRequest, progressListener, progressRequestListener);
-        return call;
 
+        return postRegistrationCall(xOpenapiClientid, userRequest, progressListener, progressRequestListener);
     }
 
     /**

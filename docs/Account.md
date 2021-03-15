@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**pan** | **String** |  | 
+**pan** | **String** |   | 
 **ica** | **Integer** |  |  [optional]
 
 

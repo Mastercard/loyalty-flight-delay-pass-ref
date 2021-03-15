@@ -24,11 +24,8 @@ limitations under the License.
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-
 package com.mastercard.developer.flight_delay_pass_reference;
 
-import java.io.IOException;
 
 import java.util.Map;
 import java.util.List;

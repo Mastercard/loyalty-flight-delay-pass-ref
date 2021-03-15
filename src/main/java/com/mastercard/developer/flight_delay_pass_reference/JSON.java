@@ -24,9 +24,6 @@ limitations under the License.
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-
-
 package com.mastercard.developer.flight_delay_pass_reference;
 
 import com.google.gson.Gson;
@@ -36,9 +33,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.google.gson.JsonElement;
 import io.gsonfire.GsonFireBuilder;
-import io.gsonfire.TypeSelector;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
@@ -53,9 +48,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-import java.util.HashMap;
 
 public class JSON {
     private Gson gson;
@@ -67,26 +59,8 @@ public class JSON {
     private ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
 
     public static GsonBuilder createGson() {
-        GsonFireBuilder fireBuilder = new GsonFireBuilder()
-        ;
-        GsonBuilder builder = fireBuilder.createGsonBuilder();
-        return builder;
-    }
-
-    private static String getDiscriminatorValue(JsonElement readElement, String discriminatorField) {
-        JsonElement element = readElement.getAsJsonObject().get(discriminatorField);
-        if (null == element) {
-            throw new IllegalArgumentException("missing discriminator field: <" + discriminatorField + ">");
-        }
-        return element.getAsString();
-    }
-
-    private static Class getClassByDiscriminator(Map classByDiscriminatorValue, String discriminatorValue) {
-        Class clazz = (Class) classByDiscriminatorValue.get(discriminatorValue.toUpperCase(Locale.ROOT));
-        if (null == clazz) {
-            throw new IllegalArgumentException("cannot determine model class of name: <" + discriminatorValue + ">");
-        }
-        return clazz;
+        GsonFireBuilder fireBuilder = new GsonFireBuilder();
+        return fireBuilder.createGsonBuilder();
     }
 
     public JSON() {

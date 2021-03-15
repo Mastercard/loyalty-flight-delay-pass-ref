@@ -24,8 +24,6 @@ limitations under the License.
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-
 package com.mastercard.developer.flight_delay_pass_reference.auth;
 
 import com.squareup.okhttp.Interceptor;
@@ -72,8 +70,8 @@ public class RetryingOAuth extends OAuth implements Interceptor {
                 .setClientSecret(clientSecret));
         setFlow(flow);
         if (parameters != null) {
-            for (String paramName : parameters.keySet()) {
-                tokenRequestBuilder.setParameter(paramName, parameters.get(paramName));
+            for (Map.Entry<String, String> param : parameters.entrySet()) {
+                tokenRequestBuilder.setParameter(param.getKey(), param.getValue());
             }
         }
     }
@@ -131,8 +129,8 @@ public class RetryingOAuth extends OAuth implements Interceptor {
             }
 
             Map<String, String> headers = oAuthRequest.getHeaders();
-            for (String headerName : headers.keySet()) {
-                requestBuilder.addHeader(headerName, headers.get(headerName));
+            for (Map.Entry<String, String> header: headers.entrySet()) {
+                requestBuilder.addHeader(header.getKey(), header.getValue());
             }
             requestBuilder.url(oAuthRequest.getLocationUri());
 
