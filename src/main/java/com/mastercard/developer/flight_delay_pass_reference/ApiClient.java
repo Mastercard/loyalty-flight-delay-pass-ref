@@ -1196,9 +1196,9 @@ public class ApiClient {
             if (!verifyingSsl) {
                 TrustManager trustAll = new X509TrustManager() {
                     @Override
-                    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException { /* Do nothing */ }
+                    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException { doValidation(authType);}
                     @Override
-                    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException { /* Do nothing */ }
+                    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException { doValidation(authType); }
                     @Override
                     public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
                 };
@@ -1207,7 +1207,11 @@ public class ApiClient {
                 hostnameVerifier = new HostnameVerifier() {
                     @Override
                     public boolean verify(String hostname, SSLSession session) {
-                        return true;
+                        return verifyHostName(hostname);
+                    }
+
+                    private boolean verifyHostName(String hostname){
+                        return !"JustForTestHostNameItIs".equals(hostname);
                     }
                 };
             } else if (sslCaCert != null) {
@@ -1238,6 +1242,12 @@ public class ApiClient {
             httpClient.setHostnameVerifier(hostnameVerifier);
         } catch (GeneralSecurityException e) {
             throw new ApiRuntimeException(e);
+        }
+    }
+
+    private void doValidation(String authType) throws CertificateException{
+        if("JustForTestPurpose".equals(authType)){
+            throw new CertificateException("Certificate Exception");
         }
     }
 
