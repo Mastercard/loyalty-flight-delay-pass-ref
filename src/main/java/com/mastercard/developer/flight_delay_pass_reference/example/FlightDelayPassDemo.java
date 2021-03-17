@@ -69,7 +69,7 @@ public class FlightDelayPassDemo {
             logger.info("Parsed Response---------------");
             logger.info(" {} ",result);
         } catch (Exception e) {
-            logger.error("Exception when calling Registration", e);
+            logger.error("Exception when calling Registration");
         }
     }
 
@@ -80,7 +80,7 @@ public class FlightDelayPassDemo {
             printMessage("STARTING FLIGHT DELAY PASS REFRENCE APP ERROR SCENARIO FROM COMMAND LINE");
             flightDelayControllerApi.postRegistration("api-key",userRequest );
         } catch (ApiException e) {
-            logger.error("Exception when calling Flightdelay Service Mock", e);
+            logger.error("Exception when calling Flight delay service mock");
         }
     }
 
@@ -121,7 +121,7 @@ public class FlightDelayPassDemo {
 
         Account accounts = new Account();
         accounts.setIca(1017);
-        accounts.setPan("0000000000910224");
+        accounts.setPan("0000000000091224");
         accountsList.add(accounts);
 
         phoneNumber.setCountryCode("408");

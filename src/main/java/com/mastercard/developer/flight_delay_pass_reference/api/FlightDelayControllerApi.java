@@ -84,7 +84,7 @@ public class FlightDelayControllerApi {
         Object localVarPostBody = userRequest;
 
         // create path and map variables
-        String localVarPath = "/loyalty/flight-delay-pass/registrations";
+        String localVarPath =  "/flight-delay-pass/mock-registrations";//"/loyalty/flight-delay-pass/registrations";
 
         List<Pair> localVarQueryParams = new ArrayList<>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<>();
