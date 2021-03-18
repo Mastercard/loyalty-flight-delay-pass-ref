@@ -74,8 +74,11 @@ public class FlightDelayPassDemo {
     }
 
     private static void executeErrorScenario(FlightDelayControllerApi flightDelayControllerApi) {
-        UserRequest userRequest = new UserRequest();
-        userRequest.setDepartureDate("ZZZZZZZZZZ");
+        UserRequest userRequest = getRegistrationObject();
+        List<Account> accountsList = new ArrayList<>();
+        Account account = new Account();
+        accountsList.add(account);
+        userRequest.setAccounts(accountsList);
         try {
             printMessage("STARTING FLIGHT DELAY PASS REFRENCE APP ERROR SCENARIO FROM COMMAND LINE");
             flightDelayControllerApi.postRegistration("api-key",userRequest );
