@@ -52,7 +52,7 @@ public class ApiRuntimeException extends RuntimeException {
     }
 
     public ApiRuntimeException(String message, int code, Map<String, List<String>> responseHeaders, String responseBody) {
-        this(message, (Throwable) null, code, responseHeaders, responseBody);
+        this(message, null, code, responseHeaders, responseBody);
     }
 
     public ApiRuntimeException(String message, Throwable throwable, int code, Map<String, List<String>> responseHeaders) {
@@ -60,7 +60,7 @@ public class ApiRuntimeException extends RuntimeException {
     }
 
     public ApiRuntimeException(int code, Map<String, List<String>> responseHeaders, String responseBody) {
-        this((String) null, (Throwable) null, code, responseHeaders, responseBody);
+        this(null, null, code, responseHeaders, responseBody);
     }
 
     public ApiRuntimeException(int code, String message) {

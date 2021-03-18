@@ -82,10 +82,10 @@ public class FlightDelayControllerApiExample {
     public static void main(String[] args) {
         
         FlightDelayControllerApi apiInstance = new FlightDelayControllerApi();
-        String xOpenapiClientid = "xOpenapiClientid_example"; // String | 
+        String xOpenapiClientId = "xOpenapiClientid_example"; // String | 
         UserRequest userRequest = new UserRequest(); // UserRequest | 
         try {
-            RegistrionResponse result = apiInstance.postRegistration(xOpenapiClientid, userRequest);
+            RegistrionResponse result = apiInstance.postRegistration(xOpenapiClientId, userRequest);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling FlightDelayControllerApi#postRegistration");
@@ -121,7 +121,7 @@ public class FlightDelayControllerApiExample {
     Eg: mvn clean install
 - Run the application using below command 
     - Eg: `java -jar path of the Jar relative to the current directory/loyalty-airport-client-1.0.0.jar <argument>`
-    - Argument: An argument which defines the feature user wants to run through command line. If you don't specify this argument, it will run all the features(registration,lounges,loungeDetails,dmc,entitlement and loungeHistory, error) one after the other
+    - Argument: An argument which defines the feature user wants to run through command line. If you don't specify this argument, it will run all the features(registration,lounges,loungeDetails,dmc,entitlement and loungeHistory, error) one after the other.
         - registration : Registration for flight delay mock service
         - error: An error scenario example         
                

@@ -128,9 +128,8 @@ public class ApiClient {
      * @param basePath Base path of the URL (e.g http://localhost:8181
      * @return An instance of OkHttpClient
      */
-    public ApiClient setBasePath(String basePath) {
+    public void setBasePath(String basePath) {
         this.basePath = basePath;
-        return this;
     }
 
     /**
@@ -364,9 +363,8 @@ public class ApiClient {
      * @param userAgent HTTP request's user agent
      * @return ApiClient
      */
-    public ApiClient setUserAgent(String userAgent) {
+    public void setUserAgent(String userAgent) {
         addDefaultHeader("User-Agent", userAgent);
-        return this;
     }
 
     /**
@@ -376,9 +374,8 @@ public class ApiClient {
      * @param value The header's value
      * @return ApiClient
      */
-    public ApiClient addDefaultHeader(String key, String value) {
+    public void addDefaultHeader(String key, String value) {
         defaultHeaderMap.put(key, value);
-        return this;
     }
 
     /**
@@ -396,7 +393,7 @@ public class ApiClient {
      * @param debugging To enable (true) or disable (false) debugging
      * @return ApiClient
      */
-    public ApiClient setDebugging(boolean debugging) {
+    public void setDebugging(boolean debugging) {
         if (debugging != this.debugging) {
             if (debugging) {
                 loggingInterceptor = new HttpLoggingInterceptor();
@@ -408,13 +405,12 @@ public class ApiClient {
             }
         }
         this.debugging = debugging;
-        return this;
     }
 
     /**
      * The path of temporary folder used to store downloaded files from endpoints
      * with file response. The default value is <code>null</code>, i.e. using
-     * the system's default tempopary folder.
+     * the system's default temporary folder.
      *
      * @see <a href="https://docs.oracle.com/javase/7/docs/api/java/io/File.html#createTempFile">createTempFile</a>
      * @return Temporary folder path
@@ -875,7 +871,7 @@ public class ApiClient {
         try {
             Response response = call.execute();
             T data = handleResponse(response, returnType);
-            return new ApiResponse<>(response.code(), response.headers().toMultimap(), data);
+            return new ApiResponse<T>(response.code(), response.headers().toMultimap(), data);
         } catch (IOException e) {
             throw new ApiException(e);
         }
@@ -910,10 +906,10 @@ public class ApiClient {
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Response response) {
                 T result;
                 try {
-                    result = (T) handleResponse(response, returnType);
+                    result =  handleResponse(response, returnType);
                 } catch (ApiException e) {
                     callback.onFailure(e, response.code(), response.headers().toMultimap());
                     return;
@@ -1103,7 +1099,7 @@ public class ApiClient {
      * Set header parameters to the request builder, including default headers.
      *
      * @param headerParams Header parameters in the ofrm of Map
-     * @param reqBuilder Reqeust.Builder
+     * @param reqBuilder Request.Builder
      */
     public void processHeaderParams(Map<String, String> headerParams, Request.Builder reqBuilder) {
         for (Entry<String, String> param : headerParams.entrySet()) {
@@ -1224,7 +1220,7 @@ public class ApiClient {
                 KeyStore caKeyStore = newEmptyKeyStore(password);
                 int index = 0;
                 for (Certificate certificate : certificates) {
-                    String certificateAlias = "ca" + Integer.toString(index++);
+                    String certificateAlias = "ca" + (index++);
                     caKeyStore.setCertificateEntry(certificateAlias, certificate);
                 }
                 TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());

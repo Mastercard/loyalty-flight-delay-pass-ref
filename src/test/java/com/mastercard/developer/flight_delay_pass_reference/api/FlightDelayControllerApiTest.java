@@ -42,8 +42,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +68,7 @@ public class FlightDelayControllerApiTest {
     public void setUp() throws ApiException {
         MockitoAnnotations.initMocks(this);
         api = new FlightDelayControllerApi(apiClientMock);
+        //noinspection unchecked,unchecked,unchecked,unchecked
         when(apiClientMock.buildCall(any(String.class), any(String.class), any(List.class), any(List.class), any(Object.class), any(Map.class), any(Map.class), any(String[].class), (ProgressRequestBody.ProgressRequestListener)isNull())).thenReturn(call);
     }
     /**
@@ -82,23 +81,23 @@ public class FlightDelayControllerApiTest {
      */
     @Test
     public void postRegistrationTest() throws ApiException {
-        String xOpenapiClientid = "api-key";
+        String xOpenapiClientId = "api-key";
         UserRequest userRequest = new UserRequest();
         RegistrionResponse registrationResponse = new RegistrionResponse();
-        ApiResponse resp = new ApiResponse(200, null, registrationResponse);
+        @SuppressWarnings("unchecked") ApiResponse resp = new ApiResponse(200, null, registrationResponse);
+        //noinspection unchecked
         when(apiClientMock.execute(any(Call.class), any(Type.class))).thenReturn(resp);
-        RegistrionResponse response = api.postRegistration(xOpenapiClientid, userRequest);
+        RegistrionResponse response = api.postRegistration(xOpenapiClientId, userRequest);
         assertEquals(response, registrationResponse);
     }
 
     @Test(expected = ApiException.class)
     public void createUserTest_Exception() throws ApiException {
-        UserRequest userRequest = null;
-        String xOpenapiClientid = null;
         RegistrionResponse registrationResponse = new RegistrionResponse();
-        ApiResponse resp = new ApiResponse(200, null, registrationResponse);
+        @SuppressWarnings("unchecked") ApiResponse resp = new ApiResponse(200, null, registrationResponse);
+        //noinspection unchecked
         when(apiClientMock.execute(any(Call.class), any(Type.class))).thenReturn(resp);
-        api.postRegistration(xOpenapiClientid, userRequest);
+        api.postRegistration(null, null);
     }
 
 }
