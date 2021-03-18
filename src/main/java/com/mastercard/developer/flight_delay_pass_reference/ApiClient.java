@@ -72,7 +72,7 @@ public class ApiClient {
     private static final String CONTENT_DISPOSITION = "Content-Disposition";
     private String basePath = "https://api.mastercard.com";
     private boolean debugging = false;
-    private Map<String, String> defaultHeaderMap = new HashMap<>();
+    private final Map<String, String> defaultHeaderMap = new HashMap<>();
     private String tempFolderPath = null;
 
     private Map<String, Authentication> authentications;
