@@ -83,7 +83,7 @@ public class FlightDelayControllerApi {
     public com.squareup.okhttp.Call postRegistrationCall(String xOpenapiClientId, UserRequest userRequest, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
 
         // create path and map variables
-        String localVarPath =  "/loyalty/flight-delay-pass/registrations";
+        String localVarPath =  "/flight-delay-pass/mock-registrations";
 
         List<Pair> localVarQueryParams = new ArrayList<>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<>();
