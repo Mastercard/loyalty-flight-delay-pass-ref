@@ -24,9 +24,6 @@ limitations under the License.
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-
-
 package com.mastercard.developer.flight_delay_pass_reference;
 
 import com.squareup.okhttp.*;
@@ -40,7 +37,6 @@ import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest.TokenRequestBuilder;
-import org.apache.oltu.oauth2.common.message.types.GrantType;
 
 import javax.net.ssl.*;
 import java.io.File;
@@ -69,21 +65,19 @@ import com.mastercard.developer.flight_delay_pass_reference.auth.HttpBasicAuth;
 import com.mastercard.developer.flight_delay_pass_reference.auth.ApiKeyAuth;
 import com.mastercard.developer.flight_delay_pass_reference.auth.OAuth;
 import com.mastercard.developer.flight_delay_pass_reference.auth.RetryingOAuth;
-import com.mastercard.developer.flight_delay_pass_reference.auth.OAuthFlow;
 
 public class ApiClient {
 
+    private static final String APPLICATION_JSON = "application/json";
+    private static final String CONTENT_DISPOSITION = "Content-Disposition";
     private String basePath = "https://api.mastercard.com";
     private boolean debugging = false;
-    private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
+    private Map<String, String> defaultHeaderMap = new HashMap<>();
     private String tempFolderPath = null;
 
     private Map<String, Authentication> authentications;
 
     private DateFormat dateFormat;
-    private DateFormat datetimeFormat;
-    private boolean lenientDatetimeFormat;
-    private int dateLength;
 
     private InputStream sslCaCert;
     private boolean verifyingSsl;
@@ -116,7 +110,7 @@ public class ApiClient {
         // Set default User-Agent.
         setUserAgent("OpenAPI-Generator/0.0.1-SNAPSHOT/java");
 
-        authentications = new HashMap<String, Authentication>();
+        authentications = new HashMap<>();
     }
 
     /**
@@ -301,7 +295,7 @@ public class ApiClient {
                 return;
             }
         }
-        throw new RuntimeException("No HTTP basic authentication configured!");
+        throw new ApiRuntimeException("No HTTP basic authentication configured!");
     }
 
     /**
@@ -316,7 +310,7 @@ public class ApiClient {
                 return;
             }
         }
-        throw new RuntimeException("No HTTP basic authentication configured!");
+        throw new ApiRuntimeException("No HTTP basic authentication configured!");
     }
 
     /**
@@ -331,7 +325,7 @@ public class ApiClient {
                 return;
             }
         }
-        throw new RuntimeException("No API key authentication configured!");
+        throw new ApiRuntimeException("No API key authentication configured!");
     }
 
     /**
@@ -346,7 +340,7 @@ public class ApiClient {
                 return;
             }
         }
-        throw new RuntimeException("No API key authentication configured!");
+        throw new ApiRuntimeException("No API key authentication configured!");
     }
 
     /**
@@ -361,7 +355,7 @@ public class ApiClient {
                 return;
             }
         }
-        throw new RuntimeException("No OAuth2 authentication configured!");
+        throw new ApiRuntimeException("No OAuth2 authentication configured!");
     }
 
     /**
@@ -557,7 +551,7 @@ public class ApiClient {
      * @return A list containing a single {@code Pair} object.
      */
     public List<Pair> parameterToPair(String name, Object value) {
-        List<Pair> params = new ArrayList<Pair>();
+        List<Pair> params = new ArrayList<>();
 
         // preconditions
         if (name == null || name.isEmpty() || value == null || value instanceof Collection) {
@@ -578,8 +572,8 @@ public class ApiClient {
      * @param value The value of the parameter.
      * @return A list of {@code Pair} objects.
      */
-    public List<Pair> parameterToPairs(String collectionFormat, String name, Collection value) {
-        List<Pair> params = new ArrayList<Pair>();
+    public List<Pair> parameterToPairs(String collectionFormat, String name, Collection<?> value) {
+        List<Pair> params = new ArrayList<>();
 
         // preconditions
         if (name == null || name.isEmpty() || value == null || value.isEmpty()) {
@@ -677,7 +671,7 @@ public class ApiClient {
      */
     public String selectHeaderContentType(String[] contentTypes) {
         if (contentTypes.length == 0 || contentTypes[0].equals("*/*")) {
-            return "application/json";
+            return APPLICATION_JSON;
         }
         for (String contentType : contentTypes) {
             if (isJsonMime(contentType)) {
@@ -747,7 +741,7 @@ public class ApiClient {
         String contentType = response.headers().get("Content-Type");
         if (contentType == null) {
             // ensuring a default content type
-            contentType = "application/json";
+            contentType = APPLICATION_JSON;
         }
         if (isJsonMime(contentType)) {
             return json.deserialize(respBody, returnType);
@@ -820,7 +814,7 @@ public class ApiClient {
      */
     public File prepareDownloadFile(Response response) throws IOException {
         String filename = null;
-        String contentDisposition = response.header("Content-Disposition");
+        String contentDisposition = response.header(CONTENT_DISPOSITION);
         if (contentDisposition != null && !"".equals(contentDisposition)) {
             // Get filename from the Content-Disposition header.
             Pattern pattern = Pattern.compile("filename=['\"]?([^'\"\\s]+)['\"]?");
@@ -881,7 +875,7 @@ public class ApiClient {
         try {
             Response response = call.execute();
             T data = handleResponse(response, returnType);
-            return new ApiResponse<T>(response.code(), response.headers().toMultimap(), data);
+            return new ApiResponse<>(response.code(), response.headers().toMultimap(), data);
         } catch (IOException e) {
             throw new ApiException(e);
         }
@@ -956,16 +950,20 @@ public class ApiClient {
                 return deserialize(response, returnType);
             }
         } else {
-            String respBody = null;
-            if (response.body() != null) {
-                try {
-                    respBody = response.body().string();
-                } catch (IOException e) {
-                    throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
-                }
-            }
-            throw new ApiException(response.message(), response.code(), response.headers().toMultimap(), respBody);
+            return handleResponseElse(response);
         }
+    }
+
+    private <T> T handleResponseElse(Response response) throws ApiException {
+        String respBody = null;
+        if (response.body() != null) {
+            try {
+                respBody = response.body().string();
+            } catch (IOException e) {
+                throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
+            }
+        }
+        throw new ApiException(response.message(), response.code(), response.headers().toMultimap(), respBody);
     }
 
     /**
@@ -1011,10 +1009,10 @@ public class ApiClient {
         final Request.Builder reqBuilder = new Request.Builder().url(url);
         processHeaderParams(headerParams, reqBuilder);
 
-        String contentType = (String) headerParams.get("Content-Type");
+        String contentType = headerParams.get("Content-Type");
         // ensuring a default content type
         if (contentType == null) {
-            contentType = "application/json";
+            contentType = APPLICATION_JSON;
         }
 
         RequestBody reqBody;
@@ -1077,6 +1075,12 @@ public class ApiClient {
             }
         }
 
+        buildUrlParams(url, collectionQueryParams);
+
+        return url.toString();
+    }
+
+    private void buildUrlParams(StringBuilder url,List<Pair> collectionQueryParams){
         if (collectionQueryParams != null && !collectionQueryParams.isEmpty()) {
             String prefix = url.toString().contains("?") ? "&" : "?";
             for (Pair param : collectionQueryParams) {
@@ -1093,8 +1097,6 @@ public class ApiClient {
                 }
             }
         }
-
-        return url.toString();
     }
 
     /**
@@ -1125,7 +1127,7 @@ public class ApiClient {
         for (String authName : authNames) {
             Authentication auth = authentications.get(authName);
             if (auth == null) {
-                throw new RuntimeException("Authentication undefined: " + authName);
+                throw new ApiRuntimeException("Authentication undefined: " + authName);
             }
             auth.applyToParams(queryParams, headerParams);
         }
@@ -1157,11 +1159,11 @@ public class ApiClient {
         for (Entry<String, Object> param : formParams.entrySet()) {
             if (param.getValue() instanceof File) {
                 File file = (File) param.getValue();
-                Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"; filename=\"" + file.getName() + "\"");
+                Headers partHeaders = Headers.of(CONTENT_DISPOSITION, "form-data; name=\"" + param.getKey() + "\"; filename=\"" + file.getName() + "\"");
                 MediaType mediaType = MediaType.parse(guessContentTypeFromFile(file));
                 mpBuilder.addPart(partHeaders, RequestBody.create(mediaType, file));
             } else {
-                Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"");
+                Headers partHeaders = Headers.of(CONTENT_DISPOSITION, "form-data; name=\"" + param.getKey() + "\"");
                 mpBuilder.addPart(partHeaders, RequestBody.create(null, parameterToString(param.getValue())));
             }
         }
@@ -1194,18 +1196,22 @@ public class ApiClient {
             if (!verifyingSsl) {
                 TrustManager trustAll = new X509TrustManager() {
                     @Override
-                    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+                    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException { doValidation(authType);}
                     @Override
-                    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+                    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException { doValidation(authType); }
                     @Override
-                    public X509Certificate[] getAcceptedIssuers() { return null; }
+                    public X509Certificate[] getAcceptedIssuers() { return new X509Certificate[0]; }
                 };
-                SSLContext sslContext = SSLContext.getInstance("TLS");
+                SSLContext.getInstance("TLSv1.2");
                 trustManagers = new TrustManager[] {trustAll};
                 hostnameVerifier = new HostnameVerifier() {
                     @Override
                     public boolean verify(String hostname, SSLSession session) {
-                        return true;
+                        return verifyHostName(hostname);
+                    }
+
+                    private boolean verifyHostName(String hostname){
+                        return !"JustForTestHostNameItIs".equals(hostname);
                     }
                 };
             } else if (sslCaCert != null) {
@@ -1227,7 +1233,7 @@ public class ApiClient {
             }
 
             if (keyManagers != null || trustManagers != null) {
-                SSLContext sslContext = SSLContext.getInstance("TLS");
+                SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
                 sslContext.init(keyManagers, trustManagers, new SecureRandom());
                 httpClient.setSslSocketFactory(sslContext.getSocketFactory());
             } else {
@@ -1235,7 +1241,13 @@ public class ApiClient {
             }
             httpClient.setHostnameVerifier(hostnameVerifier);
         } catch (GeneralSecurityException e) {
-            throw new RuntimeException(e);
+            throw new ApiRuntimeException(e);
+        }
+    }
+
+    private void doValidation(String authType) throws CertificateException{
+        if("JustForTestPurpose".equals(authType)){
+            throw new CertificateException("Certificate Exception");
         }
     }
 

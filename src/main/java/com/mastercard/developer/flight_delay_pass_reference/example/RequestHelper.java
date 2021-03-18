@@ -24,38 +24,41 @@ limitations under the License.
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-
-
 package com.mastercard.developer.flight_delay_pass_reference.example;
+
+import com.mastercard.developer.flight_delay_pass_reference.ApiException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.util.Properties;
 
 public class RequestHelper {
 	
-	private static String CONSUMER_KEY ="mastercard.flight.delay.pass.ref.app.consumer.key";
+	private static final String CONSUMER_KEY ="mastercard.flight.delay.pass.ref.app.consumer.key";
 	
-	private static String KEYSTORE_PATH ="mastercard.flight.delay.pass.ref.app.keystore.path";
+	private static final String KEYSTORE_PATH ="mastercard.flight.delay.pass.ref.app.keystore.path";
 	
-	private static String KEYSTORE_PASSWORD ="mastercard.flight.delay.pass.ref.app.keystore.password";
+	private static final String KEYSTORE_PASSWORD ="mastercard.flight.delay.pass.ref.app.keystore.password";
 	
-	private static String KEYSTORE_ALIAS ="mastercard.flight.delay.pass.ref.app.app.keystore.alias";
+	private static final String KEYSTORE_ALIAS ="mastercard.flight.delay.pass.ref.app.app.keystore.alias";
 	
-	private static String BASE_URL = "mastercard.flight.delay.pass.ref.app.url";
+	private static final String BASE_URL = "mastercard.flight.delay.pass.ref.app.url";
 	
 	private static Properties prop = null;
-	
-	 public static PrivateKey getPrivateKey() throws Exception {
+
+	private RequestHelper(){
+
+	}
+	 public static PrivateKey getPrivateKey() throws ApiException, GeneralSecurityException, IOException  {
 		 KeyStore ks = KeyStore.getInstance("PKCS12");
 		 ks.load(new FileInputStream(prop.getProperty(KEYSTORE_PATH)), prop.getProperty(KEYSTORE_PASSWORD).toCharArray());
 		 PrivateKey privateKey = (PrivateKey) ks.getKey(prop.getProperty(KEYSTORE_ALIAS), prop.getProperty(KEYSTORE_PASSWORD).toCharArray());
 		 if (privateKey == null) {
-			 throw new Exception("No key found.");
+			 throw new ApiException("No key found.");
 	     }
 		 return privateKey;
 	 }

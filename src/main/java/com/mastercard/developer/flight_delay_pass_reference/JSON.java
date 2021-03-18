@@ -24,9 +24,6 @@ limitations under the License.
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-
-
 package com.mastercard.developer.flight_delay_pass_reference;
 
 import com.google.gson.Gson;
@@ -35,16 +32,13 @@ import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.google.gson.JsonElement;
 import io.gsonfire.GsonFireBuilder;
-import io.gsonfire.TypeSelector;
+import okio.ByteString;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
-
-import com.mastercard.developer.flight_delay_pass_reference.model.*;
-import okio.ByteString;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -53,9 +47,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-import java.util.HashMap;
 
 public class JSON {
     private Gson gson;
@@ -67,26 +58,8 @@ public class JSON {
     private ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
 
     public static GsonBuilder createGson() {
-        GsonFireBuilder fireBuilder = new GsonFireBuilder()
-        ;
-        GsonBuilder builder = fireBuilder.createGsonBuilder();
-        return builder;
-    }
-
-    private static String getDiscriminatorValue(JsonElement readElement, String discriminatorField) {
-        JsonElement element = readElement.getAsJsonObject().get(discriminatorField);
-        if (null == element) {
-            throw new IllegalArgumentException("missing discriminator field: <" + discriminatorField + ">");
-        }
-        return element.getAsString();
-    }
-
-    private static Class getClassByDiscriminator(Map classByDiscriminatorValue, String discriminatorValue) {
-        Class clazz = (Class) classByDiscriminatorValue.get(discriminatorValue.toUpperCase(Locale.ROOT));
-        if (null == clazz) {
-            throw new IllegalArgumentException("cannot determine model class of name: <" + discriminatorValue + ">");
-        }
-        return clazz;
+        GsonFireBuilder fireBuilder = new GsonFireBuilder();
+        return fireBuilder.createGsonBuilder();
     }
 
     public JSON() {
@@ -154,8 +127,7 @@ public class JSON {
                 return gson.fromJson(body, returnType);
             }
         } catch (JsonParseException e) {
-            // Fallback processing when failed to parse JSON form response body:
-            // return the response body string directly for the String return type;
+            /* Fallback processing when failed to parse JSON form response body: return the response body string directly for the String return type */
             if (returnType.equals(String.class)) {
                 return (T) body;
             } else {
@@ -180,14 +152,13 @@ public class JSON {
 
         @Override
         public byte[] read(JsonReader in) throws IOException {
-            switch (in.peek()) {
-                case NULL:
-                    in.nextNull();
-                    return null;
-                default:
-                    String bytesAsBase64 = in.nextString();
-                    ByteString byteString = ByteString.decodeBase64(bytesAsBase64);
-                    return byteString.toByteArray();
+            if (in.peek() == JsonToken.NULL) {
+                in.nextNull();
+                return new byte[0];
+            } else {
+                String bytesAsBase64 = in.nextString();
+                ByteString byteString = ByteString.decodeBase64(bytesAsBase64);
+                return byteString.toByteArray();
             }
         }
     }
@@ -222,16 +193,15 @@ public class JSON {
 
         @Override
         public OffsetDateTime read(JsonReader in) throws IOException {
-            switch (in.peek()) {
-                case NULL:
-                    in.nextNull();
-                    return null;
-                default:
-                    String date = in.nextString();
-                    if (date.endsWith("+0000")) {
-                        date = date.substring(0, date.length()-5) + "Z";
-                    }
-                    return OffsetDateTime.parse(date, formatter);
+            if (in.peek() == JsonToken.NULL) {
+                in.nextNull();
+                return null;
+            } else {
+                String date = in.nextString();
+                if (date.endsWith("+0000")) {
+                    date = date.substring(0, date.length() - 5) + "Z";
+                }
+                return OffsetDateTime.parse(date, formatter);
             }
         }
     }
@@ -266,13 +236,12 @@ public class JSON {
 
         @Override
         public LocalDate read(JsonReader in) throws IOException {
-            switch (in.peek()) {
-                case NULL:
-                    in.nextNull();
-                    return null;
-                default:
-                    String date = in.nextString();
-                    return LocalDate.parse(date, formatter);
+            if (in.peek() == JsonToken.NULL) {
+                in.nextNull();
+                return null;
+            } else {
+                String date = in.nextString();
+                return LocalDate.parse(date, formatter);
             }
         }
     }
@@ -323,20 +292,19 @@ public class JSON {
 
         @Override
         public java.sql.Date read(JsonReader in) throws IOException {
-            switch (in.peek()) {
-                case NULL:
-                    in.nextNull();
-                    return null;
-                default:
-                    String date = in.nextString();
-                    try {
-                        if (dateFormat != null) {
-                            return new java.sql.Date(dateFormat.parse(date).getTime());
-                        }
-                        return new java.sql.Date(ISO8601Utils.parse(date, new ParsePosition(0)).getTime());
-                    } catch (ParseException e) {
-                        throw new JsonParseException(e);
+            if (in.peek() == JsonToken.NULL) {
+                in.nextNull();
+                return null;
+            } else {
+                String date = in.nextString();
+                try {
+                    if (dateFormat != null) {
+                        return new java.sql.Date(dateFormat.parse(date).getTime());
                     }
+                    return new java.sql.Date(ISO8601Utils.parse(date, new ParsePosition(0)).getTime());
+                } catch (ParseException e) {
+                    throw new JsonParseException(e);
+                }
             }
         }
     }
@@ -377,22 +345,24 @@ public class JSON {
         @Override
         public Date read(JsonReader in) throws IOException {
             try {
-                switch (in.peek()) {
-                    case NULL:
-                        in.nextNull();
-                        return null;
-                    default:
-                        String date = in.nextString();
-                        try {
-                            if (dateFormat != null) {
-                                return dateFormat.parse(date);
-                            }
-                            return ISO8601Utils.parse(date, new ParsePosition(0));
-                        } catch (ParseException e) {
-                            throw new JsonParseException(e);
-                        }
+                if (in.peek() == JsonToken.NULL) {
+                    in.nextNull();
+                    return null;
+                } else {
+                    return getDate(in.nextString());
                 }
             } catch (IllegalArgumentException e) {
+                throw new JsonParseException(e);
+            }
+        }
+
+        private Date getDate(String date){
+            try {
+                if (dateFormat != null) {
+                    return dateFormat.parse(date);
+                }
+                return ISO8601Utils.parse(date, new ParsePosition(0));
+            } catch (ParseException e) {
                 throw new JsonParseException(e);
             }
         }

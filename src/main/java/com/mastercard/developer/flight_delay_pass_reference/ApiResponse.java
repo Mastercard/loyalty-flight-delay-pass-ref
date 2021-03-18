@@ -24,8 +24,6 @@ limitations under the License.
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-
 package com.mastercard.developer.flight_delay_pass_reference;
 
 import java.util.List;
@@ -37,9 +35,9 @@ import java.util.Map;
  * @param <T> The type of data that is deserialized from response body
  */
 public class ApiResponse<T> {
-    final private int statusCode;
-    final private Map<String, List<String>> headers;
-    final private T data;
+    private final int statusCode;
+    private final Map<String, List<String>> headers;
+    private final T data;
 
     /**
      * @param statusCode The status code of HTTP response

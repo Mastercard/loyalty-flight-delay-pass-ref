@@ -24,8 +24,6 @@ limitations under the License.
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-
 package com.mastercard.developer.flight_delay_pass_reference.auth;
 
 import com.squareup.okhttp.Interceptor;
@@ -72,8 +70,8 @@ public class RetryingOAuth extends OAuth implements Interceptor {
                 .setClientSecret(clientSecret));
         setFlow(flow);
         if (parameters != null) {
-            for (String paramName : parameters.keySet()) {
-                tokenRequestBuilder.setParameter(paramName, parameters.get(paramName));
+            for (Map.Entry<String, String> param : parameters.entrySet()) {
+                tokenRequestBuilder.setParameter(param.getKey(), param.getValue());
             }
         }
     }
@@ -111,9 +109,7 @@ public class RetryingOAuth extends OAuth implements Interceptor {
         }
 
         // Get the token if it has not yet been acquired
-        if (getAccessToken() == null) {
-            updateAccessToken(null);
-        }
+        updateAccToken();
 
         OAuthClientRequest oAuthRequest;
         if (getAccessToken() != null) {
@@ -131,8 +127,8 @@ public class RetryingOAuth extends OAuth implements Interceptor {
             }
 
             Map<String, String> headers = oAuthRequest.getHeaders();
-            for (String headerName : headers.keySet()) {
-                requestBuilder.addHeader(headerName, headers.get(headerName));
+            for (Map.Entry<String, String> header: headers.entrySet()) {
+                requestBuilder.addHeader(header.getKey(), header.getValue());
             }
             requestBuilder.url(oAuthRequest.getLocationUri());
 
@@ -141,10 +137,7 @@ public class RetryingOAuth extends OAuth implements Interceptor {
 
             // 401/403 response codes most likely indicate an expired access token, unless it happens two times in a row
             if (
-                    response != null &&
-                            (   response.code() == HttpURLConnection.HTTP_UNAUTHORIZED ||
-                                    response.code() == HttpURLConnection.HTTP_FORBIDDEN     ) &&
-                            updateTokenAndRetryOnAuthorizationFailure
+                    checkTokenExpired(response, updateTokenAndRetryOnAuthorizationFailure)
             ) {
                 try {
                     if (updateAccessToken(requestAccessToken)) {
@@ -163,6 +156,18 @@ public class RetryingOAuth extends OAuth implements Interceptor {
         }
     }
 
+    private boolean checkTokenExpired(Response response, boolean updateTokenAndRetryOnAuthorizationFailure){
+        return response != null &&
+                (   response.code() == HttpURLConnection.HTTP_UNAUTHORIZED ||
+                        response.code() == HttpURLConnection.HTTP_FORBIDDEN     ) &&
+                updateTokenAndRetryOnAuthorizationFailure;
+    }
+
+    private void updateAccToken() throws IOException{
+        if (getAccessToken() == null) {
+            updateAccessToken(null);
+        }
+    }
     /*
      * Returns true if the access token has been updated
      */
