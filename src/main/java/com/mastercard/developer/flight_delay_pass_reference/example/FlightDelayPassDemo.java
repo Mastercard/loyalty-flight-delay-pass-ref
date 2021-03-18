@@ -39,7 +39,7 @@ import java.util.List;
 
 public class FlightDelayPassDemo {
 
-    private static Logger logger = LoggerFactory.getLogger(FlightDelayPassDemo.class);
+    private static final Logger logger = LoggerFactory.getLogger(FlightDelayPassDemo.class);
 
     public static void main(String[] args) throws Exception {
 
@@ -80,7 +80,7 @@ public class FlightDelayPassDemo {
         accountsList.add(account);
         userRequest.setAccounts(accountsList);
         try {
-            printMessage("STARTING FLIGHT DELAY PASS REFRENCE APP ERROR SCENARIO FROM COMMAND LINE");
+            printMessage("STARTING FLIGHT DELAY PASS REFERENCE APP ERROR SCENARIO FROM COMMAND LINE");
             flightDelayControllerApi.postRegistration("api-key",userRequest );
         } catch (ApiException e) {
             logger.error("Exception when calling Flight delay service mock");

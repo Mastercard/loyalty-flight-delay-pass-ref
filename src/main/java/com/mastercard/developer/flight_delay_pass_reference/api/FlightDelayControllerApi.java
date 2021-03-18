@@ -73,15 +73,14 @@ public class FlightDelayControllerApi {
 
     /**
      * Build call for postRegistration
-     * @param xOpenapiClientid  (required)
+     * @param xOpenapiClientId  (required)
      * @param userRequest  (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call postRegistrationCall(String xOpenapiClientid, UserRequest userRequest, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = userRequest;
+    public com.squareup.okhttp.Call postRegistrationCall(String xOpenapiClientId, UserRequest userRequest, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
 
         // create path and map variables
         String localVarPath =  "/flight-delay-pass/mock-registrations";
@@ -89,8 +88,8 @@ public class FlightDelayControllerApi {
         List<Pair> localVarQueryParams = new ArrayList<>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         Map<String, String> localVarHeaderParams = new HashMap<>();
-        if (xOpenapiClientid != null) {
-            localVarHeaderParams.put("x-openapi-clientid", apiClient.parameterToString(xOpenapiClientid));
+        if (xOpenapiClientId != null) {
+            localVarHeaderParams.put("x-openapi-clientid", apiClient.parameterToString(xOpenapiClientId));
         }
 
         Map<String, Object> localVarFormParams = new HashMap<>();
@@ -121,15 +120,15 @@ public class FlightDelayControllerApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, userRequest, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call postRegistrationValidateBeforeCall(String xOpenapiClientid, UserRequest userRequest, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call postRegistrationValidateBeforeCall(String xOpenapiClientId, UserRequest userRequest, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        // verify the required parameter 'xOpenapiClientid' is set
-        if (xOpenapiClientid == null) {
-            throw new ApiException("Missing the required parameter 'xOpenapiClientid' when calling postRegistration(Async)");
+        // verify the required parameter 'xOpenapiClientId' is set
+        if (xOpenapiClientId == null) {
+            throw new ApiException("Missing the required parameter 'xOpenapiClientId' when calling postRegistration(Async)");
         }
         
         // verify the required parameter 'userRequest' is set
@@ -138,32 +137,32 @@ public class FlightDelayControllerApi {
         }
 
 
-        return postRegistrationCall(xOpenapiClientid, userRequest, progressListener, progressRequestListener);
+        return postRegistrationCall(xOpenapiClientId, userRequest, progressListener, progressRequestListener);
     }
 
     /**
      * 
      * 
-     * @param xOpenapiClientid  (required)
+     * @param xOpenapiClientId  (required)
      * @param userRequest  (required)
-     * @return RegistrionResponse
+     * @return RegistrationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public RegistrionResponse postRegistration(String xOpenapiClientid, UserRequest userRequest) throws ApiException {
-        ApiResponse<RegistrionResponse> resp = postRegistrationWithHttpInfo(xOpenapiClientid, userRequest);
+    public RegistrionResponse postRegistration(String xOpenapiClientId, UserRequest userRequest) throws ApiException {
+        ApiResponse<RegistrionResponse> resp = postRegistrationWithHttpInfo(xOpenapiClientId, userRequest);
         return resp.getData();
     }
 
     /**
      * 
      * 
-     * @param xOpenapiClientid  (required)
+     * @param xOpenapiClientId  (required)
      * @param userRequest  (required)
      * @return ApiResponse&lt;RegistrionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<RegistrionResponse> postRegistrationWithHttpInfo(String xOpenapiClientid, UserRequest userRequest) throws ApiException {
-        com.squareup.okhttp.Call call = postRegistrationValidateBeforeCall(xOpenapiClientid, userRequest, null, null);
+    public ApiResponse<RegistrionResponse> postRegistrationWithHttpInfo(String xOpenapiClientId, UserRequest userRequest) throws ApiException {
+        com.squareup.okhttp.Call call = postRegistrationValidateBeforeCall(xOpenapiClientId, userRequest, null, null);
         Type localVarReturnType = new TypeToken<RegistrionResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -171,13 +170,13 @@ public class FlightDelayControllerApi {
     /**
      *  (asynchronously)
      * 
-     * @param xOpenapiClientid  (required)
+     * @param xOpenapiClientId  (required)
      * @param userRequest  (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call postRegistrationAsync(String xOpenapiClientid, UserRequest userRequest, final ApiCallback<RegistrionResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call postRegistrationAsync(String xOpenapiClientId, UserRequest userRequest, final ApiCallback<RegistrionResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -198,7 +197,7 @@ public class FlightDelayControllerApi {
             };
         }
 
-        com.squareup.okhttp.Call call = postRegistrationValidateBeforeCall(xOpenapiClientid, userRequest, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = postRegistrationValidateBeforeCall(xOpenapiClientId, userRequest, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<RegistrionResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
