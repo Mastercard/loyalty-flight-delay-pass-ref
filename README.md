@@ -104,33 +104,33 @@ public class FlightDelayControllerApiExample {
 - Please save this Sandbox Keys, .p12, key store password and alias as you are going to use these to run the application.
 - Clone this repository and set up as Maven project
 - Update the following keys in application.properties file
-    - *mastercard.airport.ref.app.consumer.key*: This can be found in the project you created on developerZone
-    - *mastercard.airport.ref.app.keystore.path*: Path where you saved your certs i.e., .p12 file you received while creating a project
-    - *mastercard.airport.ref.app.keystore.password*: This is the password you get with Sandbox cert.
-    - *mastercard.airport.ref.app.keystore.alias*: This is the alias you get with Sandbox cert.
+    - *mastercard.flight.delay.pass.ref.app.consumer.key*: This can be found in the project you created on developerZone
+    - *mastercard.flight.delay.pass.ref.app.keystore.path*: Path where you saved your certs i.e., .p12 file you received while creating a project
+    - *mastercard.flight.delay.pass.ref.app.keystore.password*: This is the password you get with Sandbox cert.
+    - *mastercard.flight.delay.pass.ref.app.keystore.alias*: This is the alias you get with Sandbox cert.
     
 - Example:
-    - mastercard.airport.ref.app.url = https://stage.api.mastercard.com
-    - mastercard.airport.ref.app.consumer.key = Abcdfefgjhilklmnopqrstuvwxyz-dxcq_zD7IiPa0df175e!22a7fddba56e800000000000000000
-    - mastercard.airport.ref.app.keystore.path = C:\\path\\provided.p12
-    - mastercard.airport.ref.app.keystore.password = pwd
-    - mastercard.airport.ref.app.keystore.alias = alias
+    - mastercard.flight.delay.pass.ref.app.url = https://stage.api.mastercard.com
+    - mastercard.flight.delay.pass.ref.app.consumer.key = Abcdfefgjhilklmnopqrstuvwxyz-dxcq_zD7IiPa0df175e!22a7fddba56e800000000000000000
+    - mastercard.flight.delay.pass.ref.app.keystore.path = C:\\path\\provided.p12
+    - mastercard.flight.delay.pass.ref.app.keystore.password = pwd
+    - mastercard.flight.delay.pass.ref.app.keystore.alias = alias
 
 	
 - Do a clean build either through IDE or command prompt, if you are doing it through command prompt then the below command should be executed in the directory which contains this repository's pom file
     Eg: mvn clean install
 - Run the application using below command 
-    - Eg: `java -jar path of the Jar relative to the current directory/loyalty-airport-client-1.0.0.jar <argument>`
-    - Argument: An argument which defines the feature user wants to run through command line. If you don't specify this argument, it will run all the features(registration,lounges,loungeDetails,dmc,entitlement and loungeHistory, error) one after the other.
+    - Example: `java -jar path of the Jar relative to the current directory/flight_delay_pass_reference-1.0.0.jar <argument>`
+    - Argument: An argument which defines the feature user wants to run through command line. If you don't specify this argument, it will run all the features(registration and error) one after the other.
         - registration : Registration for flight delay mock service
         - error: An error scenario example         
                
 - Command line example to run the application: 
-    - `java -jar target/flight_delay_pass_reference-0.0.1-SNAPSHOT.jar dmc` here the application runs only dmc feature. if you want to run more than one feature then specify the features with comma separated. Eg: `java -jar target/loyalty-airport-client-1.0.0.jar dmc,registration,error` here it executes only these 3 features.You can remove the argument to run all the features Eg: `java -jar target/loyalty-airport-client-1.0.0.jar`. If you want to run the feature one by one then execute the command `java -jar target/loyalty-airport-client-1.0.0.jar dmc` then again run the command with different feature `java -jar target/loyalty-airport-client-1.0.0.jar lounges` and so on.
+    - `java -jar target/flight_delay_pass_reference-1.0.0.jar registration` here the application runs only registration feature. if you want to run more than one feature then specify the features with comma separated. Eg: `java -jar target/flight_delay_pass_reference-1.0.0.jar registration,error` here it executes only these 2 features.You can remove the argument to run all the features Example: `java -jar target/flight_delay_pass_reference-1.0.0.jar`. If you want to run the feature one by one then execute the command `java -jar target/flight_delay_pass_reference-1.0.0.jar registration` then again run the command with different feature `java -jar target/flight_delay_pass_reference-1.0.0.jar error` and so on.
     
 # Sandbox Testing
     
-If you would like to test this in Sandbox environment please contact Mastercard representative to set up you or your organization in this environment because if this does not happen the authorization fails in the Loyalty Flight Delay Pass Service API. All the URLs have a prefix `reference` in this reference application for all resources of Loyalty Airport Service API so that it deals with sample data. You need to remove this `reference` word from the URLs when testing against real data. Eg: `loyalty/flight-delay-pass/registrations` just for reference application. 
+If you would like to test this in Sandbox environment please contact Mastercard representative to set up you or your organization in this environment because if this does not happen the authorization fails in the Loyalty Flight Delay Pass Service API. All the URLs have a prefix `reference` in this reference application for all resources of Loyalty Flight Delay Pass Service API so that it deals with sample data. You need to remove this `reference` word from the URLs when testing against real data. Eg: `loyalty/flight-delay-pass/registrations` just for reference application. 
 
 While testing the application with a `reference(/loyalty/flight-delay-pass/registrations)` url you need to send the exact inputs that are used in this reference app to get the desired response otherwise the mock returns an error with a message 'the request does not match'.
 
