@@ -29,7 +29,7 @@
         <maven-javadoc-plugin-version>2.10.4</maven-javadoc-plugin-version>
         <maven-source-plugin-version>2.2.1</maven-source-plugin-version>
         <maven-gpg-plugin-version>1.5</maven-gpg-plugin-version>
-        <log4j2-version>2.7</log4j2-version>
+        <log4j2-version>2.17.1</log4j2-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.projectKey>Mastercard_loyalty-flight-delay-pass-ref</sonar.projectKey>
   		<sonar.organization>mastercard</sonar.organization>
